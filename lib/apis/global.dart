@@ -1,5 +1,4 @@
-const String URL = "http://192.168.0.135:8080/";
-
+const String URL = "http://192.168.11.6:8080/";
 const String GET_NEWS = "news";
 const String GET_CATEGORY = "categories";
 const String GET_PROPERTY = "properties";

@@ -25,6 +25,7 @@ class _CategoryListViewState extends State<CategoryListView> {
 
   @override
   Widget build(BuildContext context) {
+    Scaffold.of(context).openDrawer();
     return SingleChildScrollView(
         child: Column(children: [
       SizedBox(
