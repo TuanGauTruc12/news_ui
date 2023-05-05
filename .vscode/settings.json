@@ -1,3 +1,4 @@
 {
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "cmake.sourceDirectory": "D:/API  Do An Chuyen Nghanh/news_ui/windows/flutter"
 }

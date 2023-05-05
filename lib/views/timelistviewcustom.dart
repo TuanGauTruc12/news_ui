@@ -1,41 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class TimeListViewCustom extends StatelessWidget {
-  final ScrollController scrollController;
-
-  const TimeListViewCustom({super.key, required this.scrollController});
+  String temperature;
+  TimeListViewCustom(
+      {super.key, required this.temperature, required this.city});
+  String city;
 
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var list = [
       {
-        "image": "assets/calendar.png",
-        "data": '${now.day} tháng ${now.month}, ${now.year}'
+        "image": "images/calendar.png",
+        "data":
+            'T${now.weekday + 1}, ${now.day} tháng ${now.month}, ${now.year}'
       },
-      {"image": "assets/temperature.png", "data": "30°C, TP. Hồ Chí Minh"}
+      {"image": "images/temperature.png", "data": '$temperature°C, $city'}
     ];
-    const double fontSize = 17;
-    TextStyle textStyle = const TextStyle(fontSize: fontSize);
-    return SizedBox(
-      child: ListView.builder(
-          controller: scrollController,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return Row(
-              children: [
-                Image(
-                  image: AssetImage(list[index]["image"] as String),
-                  height: 18,
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 4),
-                    child: Text('${list[index]["data"]}', style: textStyle))
-              ],
-            );
-          }),
-    );
+
+    TextStyle textStyle = const TextStyle(fontSize: 14);
+
+    List<Widget> listWidget = [];
+
+    for (var e in list) {
+      listWidget.add(Center(
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Image(
+            image: AssetImage('${e["image"]}'),
+            height: 22,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+              child:
+                  Text('${e["data"]}', style: textStyle )),
+        ]),
+      ));
+    }
+
+    return Container(
+        height: 30,
+        margin: const EdgeInsets.only(left: 24),
+        child: CarouselSlider(
+            options: CarouselOptions(
+                scrollDirection: Axis.vertical,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: false,
+                autoPlay: true,
+                autoPlayCurve: Curves.fastOutSlowIn),
+            items: listWidget));
   }
 }

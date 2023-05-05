@@ -8,6 +8,8 @@ import 'package:news_ui/apis/global.dart';
 
 class RequestCategory {
   static String url = "$URL$GET_CATEGORY/";
+
+  
   static List<category.Category> parseCategory(String reponseBody) {
     CategoryModels categoryModels =
         CategoryModels.fromJson(jsonDecode(reponseBody));
@@ -30,7 +32,7 @@ class RequestCategory {
     } else if (response.statusCode == 404) {
       throw Exception("not found");
     } else {
-      throw Exception('Can \'t not posts');
+      throw Exception('Can \'t not category');
     }
   }
 }
