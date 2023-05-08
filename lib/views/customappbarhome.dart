@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/views/timeListViewCustom.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,7 +9,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color red800 = const Color(0xff159A9C);
     const double fontSize = 17;
     TextStyle textStyle = const TextStyle(fontSize: fontSize);
     DateTime now = DateTime.now();
@@ -20,13 +20,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else if (hours >= 12 && hours <= 18) {
       messageAppbar = "buổi chiều";
     } else {
-      messageAppbar = "Good tối";
+      messageAppbar = "buổi tối";
     }
 
     return Stack(
       children: [
         Container(
-          color: red800,
+          color: primaryLight,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Padding(

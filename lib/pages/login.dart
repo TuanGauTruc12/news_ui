@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Column(children: <Widget>[
           const Expanded(
               child: Image(
-                  image: AssetImage('images/login.png'),
+                  image: AssetImage('images/logo.png'),
                   height: 200,
                   width: 200)),
           Expanded(

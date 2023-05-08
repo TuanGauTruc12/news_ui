@@ -1,4 +1,4 @@
-class NewListView {
+class New {
   int? id;
   String? title;
   String? slug;
@@ -14,7 +14,7 @@ class NewListView {
   int? idProperty;
   int? idCategory;
 
-  NewListView(
+  New(
       {this.id,
       this.title,
       this.slug,
@@ -30,7 +30,7 @@ class NewListView {
       this.idProperty,
       this.idCategory});
 
-  NewListView.fromJson(Map<String, dynamic> json) {
+  New.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     slug = json['slug'];

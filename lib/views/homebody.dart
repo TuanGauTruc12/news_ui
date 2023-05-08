@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_ui/models/object/newlistview.dart';
+import 'package:news_ui/models/object/new.dart';
 import 'package:news_ui/views/newlistviewcustom.dart';
 
 class HomeBody extends StatelessWidget {
-  List<NewListView> list;
+  List<New> list;
 
   HomeBody({super.key, required this.list});
 
@@ -13,6 +13,7 @@ class HomeBody extends StatelessWidget {
         itemCount: list.length,
         itemBuilder: (context, index) {
           return NewListViewCustom(
+              slug: list[index].slug!,
               author: list[index].author!,
               datePost: list[index].postingDate!,
               image: list[index].image!,

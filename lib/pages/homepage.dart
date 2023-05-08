@@ -6,8 +6,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/apis/request_category.dart';
 import 'package:news_ui/apis/request_new.dart';
-import 'package:news_ui/models/object/newlistview.dart';
+import 'package:news_ui/models/object/new.dart';
 import 'package:news_ui/models/response/weather_models.dart';
+import 'package:news_ui/views/buttomnavigationcustom.dart';
 import 'package:news_ui/views/categorylistview.dart';
 import 'package:news_ui/views/customappbarhome.dart';
 import 'package:news_ui/views/homebody.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   late double lat = -1;
   late String city = "";
   late String temperature = "";
-  late List<NewListView> list = [];
+  late List<New> list = [];
   late List<category.Category> categories = [];
 
   Future<Position> _getCurrentLocation() async {
@@ -127,24 +128,7 @@ class _HomePageState extends State<HomePage> {
         drawer: Drawer(
             child: CategoryListView(
                 categories: categories, requestCategory: requestCategory)),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Trang chủ',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.sensors_outlined),
-              label: 'Mới nhất',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Tôi',
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-          currentIndex: _selectedIndex,
-        ));
+        bottomNavigationBar: BottomNavigationCustom(
+            selectedIndex: _selectedIndex, onItemTapped: _onItemTapped));
   }
 }

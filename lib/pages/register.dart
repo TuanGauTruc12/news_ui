@@ -22,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
           const Padding(padding: EdgeInsets.only(top: 15)),
           const Expanded(
               child: Image(
-                  image: AssetImage('images/login.png'),
+                  image: AssetImage('images/logo.png'),
                   height: 200,
                   width: 200)),
           Expanded(

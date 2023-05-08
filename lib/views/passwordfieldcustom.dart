@@ -6,18 +6,12 @@ class PasswordFieldCustom extends StatefulWidget {
     _title = title;
   }
   @override
-  _PasswordFieldCustomState createState() => _PasswordFieldCustomState(_title);
+  _PasswordFieldCustomState createState() => _PasswordFieldCustomState();
 }
 
 class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
   final textFieldFocusNode = FocusNode();
   bool _obscured = false;
-
-  late String _title;
-
-  _PasswordFieldCustomState(String title) {
-    _title = title;
-  }
 
   void _toggleObscured() {
     setState(() {
@@ -37,7 +31,7 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
       focusNode: textFieldFocusNode,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        hintText: _title,
+        hintText: widget._title,
         filled: true,
         isDense: true,
         border: OutlineInputBorder(

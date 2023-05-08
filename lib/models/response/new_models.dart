@@ -1,9 +1,9 @@
-import 'package:news_ui/models/object/newlistview.dart';
+import 'package:news_ui/models/object/new.dart';
 
 class NewModels {
   bool? success;
   String? message;
-  List<NewListView>? news;
+  List<New>? news;
 
   NewModels({this.success, this.message, this.news});
 
@@ -11,9 +11,9 @@ class NewModels {
     success = json['success'];
     message = json['message'];
     if (json['news'] != null) {
-      news = <NewListView>[];
+      news = <New>[];
       json['news'].forEach((v) {
-        news!.add(NewListView.fromJson(v));
+        news!.add(New.fromJson(v));
       });
     }
   }

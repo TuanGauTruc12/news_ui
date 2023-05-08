@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   geolocator: ^9.0.2
+  flutter_html: ^2.2.1
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:
