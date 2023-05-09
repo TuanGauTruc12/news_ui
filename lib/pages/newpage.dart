@@ -19,6 +19,7 @@ class _NewPageState extends State<NewPage> {
   New? newDetail;
   List<Comment>? comments;
   bool backScreen = false;
+  String contentComment = "";
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +114,12 @@ class _NewPageState extends State<NewPage> {
                           Expanded(
                               flex: 8,
                               child: TextFieldCustom(
-                                  'Bình luận', TextInputType.text)),
+                                title: 'Bình luận',
+                                type: TextInputType.text,
+                                input: (value) {
+                                  contentComment = value;
+                                },
+                              )),
                           Expanded(
                               flex: 2,
                               child: Container(

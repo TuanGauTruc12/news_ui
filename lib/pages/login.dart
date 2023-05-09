@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/pages/ForgetPassword.dart';
+import 'package:news_ui/pages/register.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -10,11 +12,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String email = "";
+  String password = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(children: <Widget>[
+        body: Column(children: [
           const Expanded(
               child: Image(
                   image: AssetImage('images/logo.png'),
@@ -37,14 +42,31 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   const SizedBox(height: 32),
-                  TextFieldCustom('Nhập email', TextInputType.emailAddress),
+                  TextFieldCustom(
+                      title: 'Nhập email',
+                      type: TextInputType.emailAddress,
+                      input: (value) {
+                        email = value;
+                      }),
                   const SizedBox(height: 32),
-                  PasswordFieldCustom('Nhập mật khẩu'),
+                  PasswordFieldCustom(
+                      title: 'Nhập mật khẩu',
+                      input: (value) {
+                        password = value;
+                      }),
                   const SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text('Quên mật khẩu?'),
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForgetPasswordPage()),
+                            );
+                          },
+                          child: const Text('Quên mật khẩu?')),
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -57,7 +79,9 @@ class _LoginPageState extends State<LoginPage> {
                           padding: MaterialStateProperty.all(
                               const EdgeInsets.all(20)),
                         ),
-                        onPressed: () => {},
+                        onPressed: () => {
+                              //call api login
+                            },
                         child: const Text('Đăng nhập')),
                   ),
                   const SizedBox(height: 32),
@@ -69,7 +93,13 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(fontSize: 16),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterPage()),
+                          );
+                        },
                         child: const Text(
                           "Đăng ký ngay",
                           style: TextStyle(

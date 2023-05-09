@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PasswordFieldCustom extends StatefulWidget {
-  late String _title;
-  PasswordFieldCustom(String title, {super.key}) {
-    _title = title;
-  }
+  late String title;
+  final input;
+  PasswordFieldCustom({super.key, required this.title, required this.input});
   @override
   _PasswordFieldCustomState createState() => _PasswordFieldCustomState();
 }
@@ -26,12 +25,13 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: widget.input,
       keyboardType: TextInputType.visiblePassword,
       obscureText: _obscured,
       focusNode: textFieldFocusNode,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        hintText: widget._title,
+        hintText: widget.title,
         filled: true,
         isDense: true,
         border: OutlineInputBorder(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_ui/pages/homepage.dart';
+import 'package:flutter/services.dart';
+import 'package:news_ui/pages/splashscreen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(const MyApp());
 }
 
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const SplashScreen(),
     );
   }
 }

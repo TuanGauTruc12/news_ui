@@ -1,41 +1,37 @@
 import 'package:flutter/material.dart';
 
 class TextFieldCustom extends StatefulWidget {
-  late String _title;
-  late TextInputType _type;
+  String title;
+  TextInputType type;
+  final input;
 
-  TextFieldCustom(String title, TextInputType type, {super.key}) {
-    _title = title;
-    _type = type;
-  }
+  TextFieldCustom(
+      {required this.title,
+      required this.type,
+      required this.input,
+      super.key});
 
   @override
-  _TextFieldCustomState createState() => _TextFieldCustomState(_title, _type);
+  _TextFieldCustomState createState() => _TextFieldCustomState();
 }
 
 class _TextFieldCustomState extends State<TextFieldCustom> {
-  late String _title;
-  late TextInputType _type;
-  _TextFieldCustomState(String title, TextInputType type) {
-    _title = title;
-    _type = type;
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextField(
+        onChanged: widget.input,
         decoration: InputDecoration(
-            hintText: _title,
+            hintText: widget.title,
             floatingLabelStyle: const TextStyle(color: Colors.red),
             filled: true,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(12),
             ),
-            prefixIcon: _type == TextInputType.emailAddress
+            prefixIcon: widget.type == TextInputType.emailAddress
                 ? const Icon(Icons.email, size: 24)
                 : const SizedBox(height: 0),
             prefixIconColor: Colors.red),
-        keyboardType: _type);
+        keyboardType: widget.type);
   }
 }

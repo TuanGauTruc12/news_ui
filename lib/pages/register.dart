@@ -13,6 +13,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool isChecked = false;
+  String name = "";
+  String email = "";
+  String phoneNumber = "";
+  String password = "";
+  String repassword = "";
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +47,39 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   const SizedBox(height: 18),
-                  TextFieldCustom("Họ", TextInputType.text),
+                  TextFieldCustom(
+                    title: "Họ và tên",
+                    type: TextInputType.text,
+                    input: (value) {
+                      name = value;
+                    },
+                  ),
                   const SizedBox(height: 12),
-                  TextFieldCustom("Tên", TextInputType.text),
+                  TextFieldCustom(
+                      title: "Email",
+                      type: TextInputType.emailAddress,
+                      input: (value) {
+                        email = value;
+                      }),
                   const SizedBox(height: 12),
-                  TextFieldCustom("Email", TextInputType.emailAddress),
+                  TextFieldCustom(
+                      title: "Số điện thoại",
+                      type: TextInputType.number,
+                      input: (value) {
+                        phoneNumber = value;
+                      }),
                   const SizedBox(height: 12),
-                  TextFieldCustom("Số điện thoại", TextInputType.number),
+                  PasswordFieldCustom(
+                      title: "Nhập mật khẩu",
+                      input: (value) {
+                        password = value;
+                      }),
                   const SizedBox(height: 12),
-                  PasswordFieldCustom("Nhập mật khẩu"),
-                  const SizedBox(height: 12),
-                  PasswordFieldCustom("Nhập lại mật khẩu"),
+                  PasswordFieldCustom(
+                      title: "Nhập lại mật khẩu",
+                      input: (value) {
+                        repassword = value;
+                      }),
                   const SizedBox(height: 8),
                   Row(
                     children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/models/object/category.dart';
 
 class CategoryListView extends StatefulWidget {
@@ -26,20 +27,35 @@ class _CategoryListViewState extends State<CategoryListView> {
                     widget.requestCategory(widget.categories[index].slug);
                     Navigator.of(context).pop();
                   },
-                  child: Center(
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                            left: 8, right: 16, top: 16, bottom: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue,
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${widget.categories[index].title}",
-                          style: const TextStyle(
-                              backgroundColor: Colors.white, fontSize: 18),
-                        )),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: 8, right: 16, top: 16, bottom: 8),
+                    child: Stack(
+                      children: [
+                        Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Image.network(
+                              '$URL/$GET_IMAGES/${widget.categories[index].imageCategory}',
+                              fit: BoxFit.cover,
+                              height: 100,
+                            )),
+                        Positioned(
+                            right: 0,
+                            left: 0,
+                            bottom: 0,
+                            child: Center(
+                              child: Text(
+                                "${widget.categories[index].title}",
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               )))

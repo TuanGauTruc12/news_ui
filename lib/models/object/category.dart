@@ -3,15 +3,16 @@ class Category {
   String? title;
   String? slug;
   int? chubien;
+  String? imageCategory;
 
-  Category({this.id, this.title, this.slug, this.chubien});
+  Category({this.id, this.title, this.slug, this.chubien, this.imageCategory});
 
   Category.fromJson(Map<String, dynamic> json) {
-    print(json['title']);
     id = json['id'];
     title = json['title'];
     slug = json['slug'];
     chubien = json['chubien'];
+    imageCategory = json['imageCategory'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +21,7 @@ class Category {
     data['title'] = title;
     data['slug'] = slug;
     data['chubien'] = chubien;
+    data['imageCategory'] = imageCategory;
     return data;
   }
 }

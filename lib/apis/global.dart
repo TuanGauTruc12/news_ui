@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String URL = "http://172.16.1.57:8080/";
+const String URL = "http://172.16.1.59:8080/";
 const String GET_NEWS = "news";
 const String GET_CATEGORY = "categories";
 const String GET_PROPERTY = "properties";

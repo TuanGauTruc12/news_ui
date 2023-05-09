@@ -5,7 +5,12 @@ import 'package:news_ui/views/timeListViewCustom.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String city;
   String temperature;
-  CustomAppBar({super.key, required this.city, required this.temperature});
+  final searchNews;
+  CustomAppBar(
+      {super.key,
+      required this.city,
+      required this.temperature,
+      required this.searchNews});
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +58,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: Colors.black,
                 onPressed: () => Scaffold.of(context).openDrawer()),
             primary: false,
-            title: const TextField(
-                decoration: InputDecoration(
+            title: TextField(
+                onChanged: searchNews,
+                decoration: const InputDecoration(
                     hintText: "Search",
                     border: InputBorder.none,
                     hintStyle: TextStyle(
@@ -63,7 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         fontWeight: FontWeight.bold))),
             actions: [
               IconButton(
-                icon: const Icon(Icons.search, color: Colors.black),
+                icon: const Icon(Icons.brightness_4, color: Colors.black),
                 onPressed: () {},
               ),
               IconButton(
