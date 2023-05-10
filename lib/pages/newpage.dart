@@ -6,6 +6,7 @@ import 'package:news_ui/models/object/comment.dart';
 import 'package:news_ui/models/object/new.dart';
 import 'package:news_ui/views/appbarnewdetail.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
+import 'package:news_ui/views/drawernewdetail.dart';
 
 class NewPage extends StatefulWidget {
   String? slug;
@@ -37,7 +38,24 @@ class _NewPageState extends State<NewPage> {
       );
     }
 
+    void setFontSize(bool checkSize) {
+      if (checkSize == true) {
+        setState(() {
+          fontSize++;
+          return;
+        });
+        return;
+      } else {
+        setState(() {
+          fontSize--;
+          return;
+        });
+        return;
+      }
+    }
+
     return Scaffold(
+        endDrawer: DrawerNewDetail(setFontSize: setFontSize),
         appBar: const AppbarNewDetail(),
         body: newDetail == null
             ? const Center(
@@ -97,7 +115,7 @@ class _NewPageState extends State<NewPage> {
                           ),
                           Html(data: newDetail!.content, style: {
                             "body": Style(
-                                fontSize: const FontSize(18),
+                                fontSize: FontSize(fontSize),
                                 textAlign: TextAlign.justify),
                           })
                         ],

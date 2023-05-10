@@ -10,8 +10,8 @@ class AppbarNewDetail extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Container(
           color: Colors.white,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2,
+          width: MediaQuery.of(context).size.width / 2,
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Container(),
@@ -40,7 +40,9 @@ class AppbarNewDetail extends StatelessWidget implements PreferredSizeWidget {
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.more_vert),
-                    onPressed: () {},
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
                     color: Colors.black,
                   )
                 ],
