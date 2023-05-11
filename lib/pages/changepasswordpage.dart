@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/views/persontextfield.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({super.key});
+  ChangePasswordPage({super.key, required this.backgroundColor});
+  Color? backgroundColor;
 
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();
@@ -14,9 +14,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-            backgroundColor: primaryLight,
-            title: const Text('Thông tin cá nhân')),
+        appBar: AppBar(title: const Text('Thông tin cá nhân')),
         body: Column(children: [
           Expanded(
             flex: 2,
@@ -68,7 +66,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          backgroundColor: primaryLight,
+                          backgroundColor: widget.backgroundColor,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                           textStyle: const TextStyle(

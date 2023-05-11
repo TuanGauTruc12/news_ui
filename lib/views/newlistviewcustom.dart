@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_ui/apis/global.dart';
-import 'package:news_ui/pages/newpage.dart';
+import 'package:news_ui/pages/newdetailpage.dart';
 
 class NewListViewCustom extends StatelessWidget {
   String? image;
@@ -23,14 +23,15 @@ class NewListViewCustom extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NewPage(slug: slug!)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NewDetailPage(slug: slug!)));
         },
         child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            color: Colors.grey.shade300,
             child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(

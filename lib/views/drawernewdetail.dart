@@ -4,7 +4,8 @@ import 'package:news_ui/apis/global.dart';
 class DrawerNewDetail extends StatefulWidget {
   double sizeIcon = 35;
   final setFontSize;
-  DrawerNewDetail({super.key, required this.setFontSize});
+  bool isDark;
+  DrawerNewDetail({super.key, required this.setFontSize, required this.isDark});
 
   @override
   State<DrawerNewDetail> createState() => _DrawerNewDetailState();
@@ -19,7 +20,7 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
           top: 120,
           right: 0,
           child: Container(
-            color: Colors.white,
+            color: !widget.isDark ? Colors.white : Colors.black,
             width: MediaQuery.of(context).size.width * 0.75,
             child: Column(children: [
               Row(
@@ -42,10 +43,14 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                           children: [
                             Radio<Brightness>(
                               value: Brightness.light,
+                              fillColor: MaterialStateProperty.all(
+                                  const Color(0xff159A9C)),
                               groupValue: brightness,
                               onChanged: (Brightness? value) {
                                 setState(() {
                                   brightness = value;
+                                  widget.isDark = !widget.isDark;
+                                  darkNotifier.value = widget.isDark;
                                 });
                               },
                             ),
@@ -63,6 +68,8 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                               onChanged: (Brightness? value) {
                                 setState(() {
                                   brightness = value;
+                                  widget.isDark = !widget.isDark;
+                                  darkNotifier.value = widget.isDark;
                                 });
                               },
                             ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_ui/apis/request_category.dart';
 import 'package:news_ui/apis/request_new.dart';
 import 'package:news_ui/models/object/new.dart';
+import 'package:news_ui/pages/newpage.dart';
+import 'package:news_ui/pages/personpage.dart';
 import 'package:news_ui/views/buttomnavigationcustom.dart';
 import 'package:news_ui/views/categorylistview.dart';
 import 'package:news_ui/views/customappbarhome.dart';
@@ -68,18 +70,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawerEnableOpenDragGesture: false,
-        appBar: CustomAppBar(
-          city: widget.city,
-          temperature: widget.temperature,
-          searchNews: searchNew,
-        ),
-        body: HomeBody(list: lisTemp.isEmpty ? list : lisTemp),
-        drawer: Drawer(
-            child: CategoryListView(
-                categories: categories, requestCategory: requestCategory)),
-        bottomNavigationBar: BottomNavigationCustom(
-            selectedIndex: _selectedIndex, onItemTapped: _onItemTapped));
+    List<Widget> widgets = [
+      HomeBody(list: lisTemp.isEmpty ? list : lisTemp),
+      const NewPage(),
+      PersonPage(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped)
+    ];
+
+    return widgets[_selectedIndex].runtimeType == PersonPage
+        ? widgets[_selectedIndex]
+        : Scaffold(
+            drawerEnableOpenDragGesture: false,
+            appBar: CustomAppBar(
+              city: widget.city,
+              temperature: widget.temperature,
+              searchNews: searchNew,
+            ),
+            body: widgets.elementAt(_selectedIndex),
+            drawer: Drawer(
+                child: CategoryListView(
+                    categories: categories, requestCategory: requestCategory)),
+            bottomNavigationBar: BottomNavigationCustom(
+                selectedIndex: _selectedIndex, onItemTapped: _onItemTapped));
   }
 }

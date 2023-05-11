@@ -49,9 +49,7 @@ class _CategoryListViewState extends State<CategoryListView> {
                               child: Text(
                                 "${widget.categories[index].title}",
                                 style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ))
                       ],

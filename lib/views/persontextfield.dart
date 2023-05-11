@@ -18,9 +18,8 @@ class PersonTextField extends StatelessWidget {
     return Row(children: [
       Expanded(
           flex: 2,
-          child: Container(
+          child: SizedBox(
             height: 60,
-            color: Colors.white,
             child: iconData,
           )),
       Expanded(

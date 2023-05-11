@@ -19,6 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     DateTime now = DateTime.now();
     int hours = now.hour;
     String messageAppbar = "";
+    bool isDark = darkNotifier.value;
 
     if (hours >= 1 && hours <= 12) {
       messageAppbar = "buổi sáng";
@@ -30,8 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Stack(
       children: [
-        Container(
-          color: primaryLight,
+        SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Padding(
@@ -52,10 +52,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           left: 20.0,
           right: 20.0,
           child: AppBar(
-            backgroundColor: Colors.white,
             leading: IconButton(
                 icon: const Icon(Icons.menu),
-                color: Colors.black,
                 onPressed: () => Scaffold.of(context).openDrawer()),
             primary: false,
             title: TextField(
@@ -64,18 +62,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     hintText: "Search",
                     border: InputBorder.none,
                     hintStyle: TextStyle(
-                        color: Colors.grey,
+                        color: Colors.white,
                         fontSize: fontSize,
                         fontWeight: FontWeight.bold))),
             actions: [
               IconButton(
-                icon: const Icon(Icons.brightness_4, color: Colors.black),
+                icon: const Icon(Icons.brightness_4),
                 onPressed: () {},
               ),
               IconButton(
-                icon: Image.asset('images/notification.png'),
+                icon: const Icon(Icons.notifications),
                 onPressed: () {},
-                color: Colors.black,
               )
             ],
           ),
