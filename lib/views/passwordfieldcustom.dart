@@ -10,7 +10,7 @@ class PasswordFieldCustom extends StatefulWidget {
 
 class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
   final textFieldFocusNode = FocusNode();
-  bool _obscured = false;
+  bool _obscured = true;
 
   void _toggleObscured() {
     setState(() {

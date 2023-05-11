@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
+import 'package:news_ui/apis/request_user.dart';
 import 'package:news_ui/pages/ForgetPassword.dart';
 import 'package:news_ui/pages/register.dart';
+import 'package:news_ui/pages/splashscreen.dart';
+import 'package:news_ui/views/homebody.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -14,6 +18,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = "";
   String password = "";
+  String error = "";
+  double fontSize = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +43,10 @@ class _LoginPageState extends State<LoginPage> {
                     )),
                 child: Column(children: [
                   const SizedBox(height: 24),
-                  const Text(
+                  Text(
                     'Đăng nhập',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: fontSize),
                   ),
                   const SizedBox(height: 32),
                   TextFieldCustom(
@@ -63,11 +70,26 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ForgetPasswordPage()),
+                                  builder: (context) =>
+                                      const ForgetPasswordPage()),
                             );
                           },
-                          child: const Text('Quên mật khẩu?')),
+                          child: Text(
+                            'Quên mật khẩu?',
+                            style: TextStyle(fontSize: fontSize),
+                          )),
                     ],
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    alignment: Alignment.centerLeft,
+                    child: error.isEmpty
+                        ? const SizedBox()
+                        : Text(
+                            error,
+                            style: TextStyle(
+                                color: Colors.red, fontSize: fontSize),
+                          ),
                   ),
                   const SizedBox(height: 32),
                   SizedBox(
@@ -81,16 +103,39 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () => {
                               //call api login
+                              RequestUser()
+                                  .login(email, password)
+                                  .then((value) {
+                                if (value.user == null) {
+                                  setState(() {
+                                    error =
+                                        "Tài khoản sai! Vui lòng kiểm tra lại";
+                                  });
+                                } else {
+                                  setState(() {
+                                    user = value.user;
+                                    error = "";
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SplashScreen()));
+                                  });
+                                }
+                              })
                             },
-                        child: const Text('Đăng nhập')),
+                        child: Text(
+                          'Đăng nhập',
+                          style: TextStyle(fontSize: fontSize),
+                        )),
                   ),
                   const SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         "Bạn chưa có tài khoản?",
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: fontSize),
                       ),
                       TextButton(
                         onPressed: () {
@@ -100,12 +145,12 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context) => const RegisterPage()),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           "Đăng ký ngay",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 16),
+                              fontSize: fontSize),
                         ),
                       )
                     ],

@@ -1,11 +1,10 @@
+import 'package:news_ui/models/object/message.dart';
 import 'package:news_ui/models/object/new.dart';
 
-class NewModels {
-  bool? success;
-  String? message;
+class NewModels extends Message {
   List<New>? news;
 
-  NewModels({this.success, this.message, this.news});
+  NewModels({super.success, super.message, this.news});
 
   NewModels.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -18,6 +17,7 @@ class NewModels {
     }
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;

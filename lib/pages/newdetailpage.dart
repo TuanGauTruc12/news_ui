@@ -4,9 +4,10 @@ import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/apis/request_new.dart';
 import 'package:news_ui/models/object/comment.dart';
 import 'package:news_ui/models/object/new.dart';
+import 'package:news_ui/pages/login.dart';
 import 'package:news_ui/views/appbarnewdetail.dart';
-import 'package:news_ui/views/textfieldcustom.dart';
 import 'package:news_ui/views/drawernewdetail.dart';
+import 'package:news_ui/views/textfieldcustom.dart';
 
 class NewDetailPage extends StatefulWidget {
   String? slug;
@@ -55,7 +56,7 @@ class _NewDetailPageState extends State<NewDetailPage> {
     }
 
     bool isDark = darkNotifier.value;
-
+    double size = user != null ? MediaQuery.of(context).size.width * 0.1 : 0;
     return Scaffold(
         endDrawer: DrawerNewDetail(setFontSize: setFontSize, isDark: isDark),
         appBar: AppbarNewDetail(isDark: isDark),
@@ -126,31 +127,43 @@ class _NewDetailPageState extends State<NewDetailPage> {
                   ),
                   Positioned(
                       bottom: 0,
-                      right: 0,
-                      left: 0,
+                      left: size,
+                      right: size,
                       child: Container(
-                        child: Row(children: [
-                          Expanded(
-                              flex: 8,
-                              child: TextFieldCustom(
-                                title: 'Bình luận',
-                                type: TextInputType.text,
-                                input: (value) {
-                                  contentComment = value;
+                        alignment: Alignment.center,
+                        child: user != null
+                            ? Row(children: [
+                                Expanded(
+                                    flex: 8,
+                                    child: TextFieldCustom(
+                                      title: 'Bình luận',
+                                      type: TextInputType.text,
+                                      input: (value) {
+                                        contentComment = value;
+                                      },
+                                    )),
+                                Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {},
+                                      child: const Icon(
+                                        Icons.send,
+                                        color: Colors.blue,
+                                      ),
+                                    ))
+                              ])
+                            : ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage()));
                                 },
-                              )),
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: const Icon(
-                                    Icons.send,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ))
-                        ]),
+                                child: const Text(
+                                  "Đăng nhập để bình luận",
+                                  style: TextStyle(fontSize: 20),
+                                )),
                       ))
                 ],
               ));
