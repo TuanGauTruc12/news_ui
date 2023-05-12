@@ -146,6 +146,7 @@ class _NewDetailPageState extends State<NewDetailPage> {
                                 Expanded(
                                     flex: 8,
                                     child: TextFieldCustom(
+                                      isRequired: false,
                                       title: 'Bình luận',
                                       type: TextInputType.text,
                                       input: (value) {

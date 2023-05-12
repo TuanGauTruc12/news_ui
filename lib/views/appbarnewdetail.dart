@@ -12,8 +12,7 @@ class AppbarNewDetail extends StatelessWidget implements PreferredSizeWidget {
     if (isDark) {
       image = Image.asset('images/logo-mini.png', fit: BoxFit.contain);
     } else {
-      image = Image.asset('images/logo-mini.png',
-          color: Colors.white, fit: BoxFit.contain);
+      image = Image.asset('images/logo-mini.png', fit: BoxFit.contain);
     }
 
     return Stack(

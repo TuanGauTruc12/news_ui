@@ -13,11 +13,13 @@ class HomeBody extends StatelessWidget {
         itemCount: list.length,
         itemBuilder: (context, index) {
           return NewListViewCustom(
-              slug: list[index].slug!,
-              author: list[index].author!,
-              datePost: list[index].postingDate!,
-              image: list[index].image!,
-              sumary: list[index].summary!);
+            slug: list[index].slug!,
+            author: list[index].author!,
+            datePost: list[index].postingDate!,
+            image: list[index].image!,
+            sumary: list[index].summary!,
+            title: list[index].title!,
+          );
         });
   }
 }

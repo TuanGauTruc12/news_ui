@@ -4,7 +4,6 @@ import 'package:news_ui/apis/request_user.dart';
 import 'package:news_ui/pages/ForgetPassword.dart';
 import 'package:news_ui/pages/register.dart';
 import 'package:news_ui/pages/splashscreen.dart';
-import 'package:news_ui/views/homebody.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -20,9 +19,11 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   String error = "";
   double fontSize = 18;
+  bool isDark = darkNotifier.value;
 
   @override
   Widget build(BuildContext context) {
+    Color? color = !isDark ? Colors.grey[200] : Colors.transparent;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(children: [
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: color,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(22.0),
                       topRight: Radius.circular(22.0),
@@ -50,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 32),
                   TextFieldCustom(
+                      isRequired: false,
                       title: 'Nhập email',
                       type: TextInputType.emailAddress,
                       input: (value) {
@@ -57,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                       }),
                   const SizedBox(height: 32),
                   PasswordFieldCustom(
+                      isRequired: false,
                       title: 'Nhập mật khẩu',
                       input: (value) {
                         password = value;
@@ -81,7 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 8),
                     alignment: Alignment.centerLeft,
                     child: error.isEmpty
                         ? const SizedBox()
@@ -91,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.red, fontSize: fontSize),
                           ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -99,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xff159A9C)),
                           padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(20)),
+                              const EdgeInsets.all(16)),
                         ),
                         onPressed: () => {
                               //call api login
@@ -137,8 +139,15 @@ class _LoginPageState extends State<LoginPage> {
                         "Bạn chưa có tài khoản?",
                         style: TextStyle(fontSize: fontSize),
                       ),
-                      TextButton(
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xff159A9C)),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.all(16))),
                         onPressed: () {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -148,9 +157,9 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Đăng ký ngay",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: fontSize),
+                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize,
+                          ),
                         ),
                       )
                     ],

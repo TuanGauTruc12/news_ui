@@ -38,6 +38,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               Padding(
                 padding: const EdgeInsets.all(24),
                 child: TextFieldCustom(
+                  isRequired: false,
                     title: "Nhập email",
                     type: TextInputType.emailAddress,
                     input: (value) {

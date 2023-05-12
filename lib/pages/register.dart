@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/pages/login.dart';
 import 'package:news_ui/views/alertdialogcustom.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
@@ -21,6 +22,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = darkNotifier.value;
+    Color? color = !isDark ? Colors.grey[200] : Colors.transparent;
+    double fontSize = 17;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(children: <Widget>[
@@ -35,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Container(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: color,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(22.0),
                       topRight: Radius.circular(22.0),
@@ -48,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 18),
                   TextFieldCustom(
+                    isRequired: true,
                     title: "Họ và tên",
                     type: TextInputType.text,
                     input: (value) {
@@ -56,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 12),
                   TextFieldCustom(
+                      isRequired: true,
                       title: "Email",
                       type: TextInputType.emailAddress,
                       input: (value) {
@@ -63,6 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                   const SizedBox(height: 12),
                   TextFieldCustom(
+                      isRequired: false,
                       title: "Số điện thoại",
                       type: TextInputType.number,
                       input: (value) {
@@ -70,12 +77,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                   const SizedBox(height: 12),
                   PasswordFieldCustom(
+                      isRequired: true,
                       title: "Nhập mật khẩu",
                       input: (value) {
                         password = value;
                       }),
                   const SizedBox(height: 12),
                   PasswordFieldCustom(
+                      isRequired: true,
                       title: "Nhập lại mật khẩu",
                       input: (value) {
                         repassword = value;
@@ -105,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xff159A9C)),
                           padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(12)),
+                              const EdgeInsets.all(20)),
                         ),
                         onPressed: () => showDialog(
                               context: context,
@@ -138,22 +147,33 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                         child: const Text('Đăng ký')),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text(
+                      Text(
                         "Bạn chưa có tài khoản?",
-                        style: TextStyle(fontSize: 13),
+                        style: TextStyle(fontSize: fontSize),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Đăng ký ngay",
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              const Color(0xff159A9C),
+                            ),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.all(16))),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        child: Text(
+                          "Đăng nhập ngay",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 13),
+                              fontWeight: FontWeight.bold, fontSize: fontSize),
                         ),
                       )
                     ],

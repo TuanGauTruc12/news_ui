@@ -8,6 +8,7 @@ class NewListViewCustom extends StatelessWidget {
   String? author;
   String? datePost;
   String? slug;
+  String? title;
 
   NewListViewCustom(
       {super.key,
@@ -15,7 +16,8 @@ class NewListViewCustom extends StatelessWidget {
       required this.sumary,
       required this.author,
       required this.datePost,
-      required this.slug});
+      required this.slug,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +37,24 @@ class NewListViewCustom extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.network('$URL/$GET_IMAGES/$image',
-                        fit: BoxFit.cover, height: 100, width: 100),
+                        fit: BoxFit.cover, height: 120, width: 120),
                     const Padding(padding: EdgeInsets.all(4)),
                     Expanded(
                       flex: 3,
                       child: Column(
                         children: [
+                          Text(
+                            title!,
+                            style: const TextStyle(
+                                overflow: TextOverflow.fade,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 3,
+                            textAlign: TextAlign.justify,
+                          ),
+                          const SizedBox(height: 8),
                           Text(
                             sumary!,
                             style: const TextStyle(overflow: TextOverflow.fade),

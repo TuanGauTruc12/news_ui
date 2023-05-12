@@ -100,18 +100,6 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                     child: Row(
                       children: [
                         IconButton(
-                            onPressed: () {
-                              widget.setFontSize(true);
-                              return;
-                            },
-                            icon: Icon(Icons.add, size: widget.sizeIcon)),
-                        const SizedBox(width: 15),
-                        ImageIcon(
-                          const AssetImage('images/size-center.png'),
-                          size: widget.sizeIcon,
-                        ),
-                        const SizedBox(width: 15),
-                        IconButton(
                           onPressed: () {
                             widget.setFontSize(false);
                             return;
@@ -120,7 +108,19 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                             Icons.remove,
                             size: widget.sizeIcon,
                           ),
-                        )
+                        ),
+                        const SizedBox(width: 15),
+                        ImageIcon(
+                          const AssetImage('images/size-center.png'),
+                          size: widget.sizeIcon,
+                        ),
+                        const SizedBox(width: 15),
+                        IconButton(
+                            onPressed: () {
+                              widget.setFontSize(true);
+                              return;
+                            },
+                            icon: Icon(Icons.add, size: widget.sizeIcon))
                       ],
                     ),
                   )
