@@ -31,23 +31,23 @@ class _HomePageState extends State<HomePage> {
   List<category.Category> categories = [];
 
   void requestCategory(String slug) {
-    RequestNew.fetchNew(slug).then((news) {
+    RequestNew.fetchNewBySlug(slug).then((news) {
       setState(() {
         list = news;
       });
     });
   }
 
-  List<New> lisTemp = [];
+  List<New> listTemp = [];
 
   void searchNew(value) {
     if (value.isNotEmpty) {
       setState(() {
-        lisTemp = list.where((e) => e.title!.contains(value)).toList();
+        listTemp = list.where((e) => e.title!.contains(value)).toList();
       });
     } else {
       setState(() {
-        lisTemp = list;
+        listTemp = list;
       });
     }
   }
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
-      HomeBody(list: lisTemp.isEmpty ? list : lisTemp),
+      HomeBody(list: listTemp.isEmpty ? list : listTemp),
       const NewPage(),
       PersonPage(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped)
     ];

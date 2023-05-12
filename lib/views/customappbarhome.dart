@@ -36,10 +36,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-            child: Container(
-              alignment: Alignment.bottomRight,
+          child: Container(
+            color: isDark ? Colors.transparent : primaryLight,
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
               child: Row(children: [
                 Text('Chào bạn $messageAppbar', style: textStyle),
                 Expanded(

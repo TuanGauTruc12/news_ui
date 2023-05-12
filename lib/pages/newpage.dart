@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/request_new.dart';
+import 'package:news_ui/models/object/new.dart';
+import 'package:news_ui/views/homebody.dart';
 
 class NewPage extends StatefulWidget {
   const NewPage({super.key});
@@ -8,15 +11,19 @@ class NewPage extends StatefulWidget {
 }
 
 class _NewPageState extends State<NewPage> {
+  List<New> news = [];
+  @override
+  void initState() {
+    super.initState();
+    RequestNew.fetchNew().then((news) {
+      setState(() {
+        this.news = news;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        color: Colors.blue,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: const Text('Mới nhất'),
-      ),
-    );
+    return HomeBody(list: news);
   }
 }

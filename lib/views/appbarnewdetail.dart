@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 
 class AppbarNewDetail extends StatelessWidget implements PreferredSizeWidget {
   AppbarNewDetail({super.key, required this.isDark});
@@ -18,11 +19,10 @@ class AppbarNewDetail extends StatelessWidget implements PreferredSizeWidget {
     return Stack(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height / 2,
-          width: MediaQuery.of(context).size.width / 2,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Container(),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+            color: isDark ? Colors.transparent : primaryLight,
           ),
         ),
         Positioned(

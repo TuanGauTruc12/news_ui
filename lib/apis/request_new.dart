@@ -8,9 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:news_ui/apis/global.dart';
 
 class RequestNew {
-  static String url = "$URL$GET_NEWS/";
+  static String url = "$URL$GET_NEWS";
 
-  static List<New> getNewByCategory(String reponseBody) {
+  static List<New> parseNews(String reponseBody) {
     NewModels newModels = NewModels.fromJson(jsonDecode(reponseBody));
     late List<New> news = [];
     if (newModels.success == true && newModels.message == "successfully") {
@@ -25,11 +25,11 @@ class RequestNew {
     return newDetail;
   }
 
-  static Future<List<New>> fetchNew(String slug) async {
-    final response = await http.get(Uri.parse("${url}category=$slug"));
+  static Future<List<New>> fetchNewBySlug(String slug) async {
+    final response = await http.get(Uri.parse("$url/category=$slug"));
 
     if (response.statusCode == 200) {
-      return compute(getNewByCategory, utf8.decode(response.bodyBytes));
+      return compute(parseNews, utf8.decode(response.bodyBytes));
     } else if (response.statusCode == 404) {
       throw Exception("Not found");
     } else {
@@ -38,13 +38,24 @@ class RequestNew {
   }
 
   static Future<NewDetail> fetchNewDetail(String slug) async {
-    final response = await http.get(Uri.parse('${url}slugNews=$slug'));
+    final response = await http.get(Uri.parse('$url/slugNews=$slug'));
     if (response.statusCode == 200) {
       return compute(getNewBySlug, utf8.decode(response.bodyBytes));
     } else if (response.statusCode == 404) {
       throw Exception("Not found");
     } else {
       throw Exception('Can \'t not news');
+    }
+  }
+
+  static Future<List<New>> fetchNew() async {
+    final response = await http.get(Uri.parse('$url/new'));
+    if (response.statusCode == 200) {
+      return compute(parseNews, utf8.decode(response.bodyBytes));
+    } else if (response.statusCode == 404) {
+      throw Exception("Not found");
+    } else {
+      throw Exception('Can \'t not category');
     }
   }
 }
