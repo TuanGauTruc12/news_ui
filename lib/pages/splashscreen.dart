@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   static Map<String, Object?> _parseWeather(String reponseBody) {
     WeatherModels models = WeatherModels.fromJson(jsonDecode(reponseBody));
-    double temp = models.main!.temp as double;
+    double? temp = models.main!.temp;
     var weather = {
-      "temp": (temp - 273.15).toStringAsFixed(2).toString(),
+      "temp": (temp! - 273.15).toStringAsFixed(2).toString(),
       "cityName": models.name as String
     };
 
