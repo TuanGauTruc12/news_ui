@@ -6,6 +6,7 @@ import 'package:news_ui/models/object/comment.dart';
 import 'package:news_ui/models/object/new.dart';
 import 'package:news_ui/pages/login.dart';
 import 'package:news_ui/views/appbarnewdetail.dart';
+import 'package:news_ui/views/customlistviewcomment.dart';
 import 'package:news_ui/views/drawernewdetail.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -118,9 +119,18 @@ class _NewDetailPageState extends State<NewDetailPage> {
                           ),
                           Html(data: newDetail!.content, style: {
                             "body": Style(
-                                fontSize: FontSize(fontSize),
-                                textAlign: TextAlign.justify),
-                          })
+                              fontSize: FontSize(fontSize),
+                              textAlign: TextAlign.justify,
+                            ),
+                            "span": Style(
+                                color: isDark ? Colors.white : Colors.black)
+                          }),
+                          comments!.isEmpty
+                              ? Text(
+                                  "Hiện chưa có người bình luận.".toUpperCase(),
+                                  style: TextStyle(fontSize: fontSize + 2),
+                                )
+                              : CustomListViewComment(comments: comments!),
                         ],
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/apis/request_category.dart';
 import 'package:news_ui/apis/request_new.dart';
 import 'package:news_ui/models/object/new.dart';
@@ -68,6 +69,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _onChangeBright(bool isBright) {
+    setState(() {
+      isBright = !isBright;
+      darkNotifier.value = isBright;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [
@@ -81,10 +89,10 @@ class _HomePageState extends State<HomePage> {
         : Scaffold(
             drawerEnableOpenDragGesture: false,
             appBar: CustomAppBar(
-              city: widget.city,
-              temperature: widget.temperature,
-              searchNews: searchNew,
-            ),
+                city: widget.city,
+                temperature: widget.temperature,
+                searchNews: searchNew,
+                onChangeBright: _onChangeBright),
             body: widgets.elementAt(_selectedIndex),
             drawer: Drawer(
                 child: CategoryListView(

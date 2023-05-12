@@ -6,11 +6,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String city;
   String temperature;
   final searchNews;
+  final onChangeBright;
   CustomAppBar(
       {super.key,
       required this.city,
       required this.temperature,
-      required this.searchNews});
+      required this.searchNews,
+      required this.onChangeBright});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.brightness_4),
-                onPressed: () {},
+                onPressed: () {
+                  onChangeBright(isDark);
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.notifications),
