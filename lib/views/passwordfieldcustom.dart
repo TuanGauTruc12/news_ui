@@ -68,7 +68,7 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
                               ? Icons.visibility_rounded
                               : Icons.visibility_off_rounded,
                           size: 18,
-                          color: Colors.black,
+                          color: color,
                         ),
                       ),
                     ],
@@ -80,7 +80,7 @@ class _PasswordFieldCustomState extends State<PasswordFieldCustom> {
                           ? Icons.visibility_rounded
                           : Icons.visibility_off_rounded,
                       size: 20,
-                      color: Colors.black,
+                      color: color,
                     ),
                   )));
   }

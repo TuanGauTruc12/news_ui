@@ -4,8 +4,7 @@ import 'package:news_ui/apis/global.dart';
 class DrawerNewDetail extends StatefulWidget {
   double sizeIcon = 35;
   final setFontSize;
-  bool isDark;
-  DrawerNewDetail({super.key, required this.setFontSize, required this.isDark});
+  DrawerNewDetail({super.key, required this.setFontSize});
 
   @override
   State<DrawerNewDetail> createState() => _DrawerNewDetailState();
@@ -14,13 +13,14 @@ class DrawerNewDetail extends StatefulWidget {
 class _DrawerNewDetailState extends State<DrawerNewDetail> {
   @override
   Widget build(BuildContext context) {
+    bool isDark = darkNotifier.value;
     return Stack(
       children: [
         Positioned(
           top: 120,
           right: 0,
           child: Container(
-            color: !widget.isDark ? Colors.white : Colors.black,
+            color: !isDark ? Colors.white : Colors.black,
             width: MediaQuery.of(context).size.width * 0.75,
             child: Column(children: [
               Row(
@@ -49,8 +49,8 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                               onChanged: (Brightness? value) {
                                 setState(() {
                                   brightness = value;
-                                  widget.isDark = !widget.isDark;
-                                  darkNotifier.value = widget.isDark;
+                                  isDark = !isDark;
+                                  darkNotifier.value = isDark;
                                 });
                               },
                             ),
@@ -68,8 +68,8 @@ class _DrawerNewDetailState extends State<DrawerNewDetail> {
                               onChanged: (Brightness? value) {
                                 setState(() {
                                   brightness = value;
-                                  widget.isDark = !widget.isDark;
-                                  darkNotifier.value = widget.isDark;
+                                  isDark = !isDark;
+                                  darkNotifier.value = isDark;
                                 });
                               },
                             ),

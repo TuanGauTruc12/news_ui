@@ -71,8 +71,15 @@ class _HomePageState extends State<HomePage> {
 
   void _onChangeBright(bool isBright) {
     setState(() {
-      isBright = !isBright;
-      darkNotifier.value = isBright;
+      if (isBright) {
+        isBright = false;
+        darkNotifier.value = isBright;
+        brightness = Brightness.light;
+      } else {
+        isBright = true;
+        darkNotifier.value = isBright;
+        brightness = Brightness.dark;
+      }
     });
   }
 

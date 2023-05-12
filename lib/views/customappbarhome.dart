@@ -72,6 +72,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: const Icon(Icons.brightness_4),
                 onPressed: () {
                   onChangeBright(isDark);
+                  //Light=false
                 },
               ),
               IconButton(

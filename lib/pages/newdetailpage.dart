@@ -59,7 +59,7 @@ class _NewDetailPageState extends State<NewDetailPage> {
     bool isDark = darkNotifier.value;
     double size = user != null ? MediaQuery.of(context).size.width * 0.1 : 0;
     return Scaffold(
-        endDrawer: DrawerNewDetail(setFontSize: setFontSize, isDark: isDark),
+        endDrawer: DrawerNewDetail(setFontSize: setFontSize),
         appBar: AppbarNewDetail(isDark: isDark),
         body: newDetail == null
             ? const Center(
@@ -164,6 +164,12 @@ class _NewDetailPageState extends State<NewDetailPage> {
                                     ))
                               ])
                             : ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xff159A9C)),
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.all(16)),
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
