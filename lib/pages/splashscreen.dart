@@ -16,12 +16,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late double long = -1;
-  late double lat = -1;
-  late String city = "";
-  late String temperature = "";
-  bool checkSuccess = false;
-
+  double long = -1;
+  double lat = -1;
   static Map<String, Object?> _parseWeather(String reponseBody) {
     WeatherModels models = WeatherModels.fromJson(jsonDecode(reponseBody));
     double? temp = models.main!.temp;
@@ -67,29 +63,37 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    _getCurrentLocation().then((value) {
-      setState(() {
+    if (city != "" && temperature != "") {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                      city: city,
+                      temperature: temperature,
+                    )));
+      });
+    } else {
+      _getCurrentLocation().then((value) {
         lat = value.latitude;
         long = value.longitude;
-        if (lat != -1 && long != -1) {
-          String url = '${URL_weather}lat=$lat&lon=$long&appid=$api_key';
-          fetchWeather(url).then((value) {
-            setState(() {
-              city = value["cityName"] as String;
-              temperature = value["temp"] as String;
+        String url = '${URL_weather}lat=$lat&lon=$long&appid=$api_key';
+        fetchWeather(url).then((value) {
+          setState(() {
+            city = value["cityName"] as String;
+            temperature = value["temp"] as String;
 
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(
-                            city: city,
-                            temperature: temperature,
-                          )));
-            });
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomePage(
+                          city: city,
+                          temperature: temperature,
+                        )));
           });
-        }
+        });
       });
-    });
+    }
   }
 
   @override

@@ -5,16 +5,23 @@ class PersonTextField extends StatelessWidget {
   Widget iconData;
   TextInputType inputType;
   bool isChanged;
+  String data;
+  final setData;
 
   PersonTextField(
       {super.key,
       required this.hnitText,
       required this.iconData,
       required this.inputType,
-      required this.isChanged});
+      required this.isChanged,
+      required this.data,
+      this.setData});
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    controller.text = data;
+
     return Row(children: [
       Expanded(
           flex: 2,
@@ -25,6 +32,8 @@ class PersonTextField extends StatelessWidget {
       Expanded(
           flex: 8,
           child: TextField(
+              onChanged: setData,
+              controller: controller,
               obscureText:
                   inputType == TextInputType.visiblePassword ? true : false,
               decoration: InputDecoration(

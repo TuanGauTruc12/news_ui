@@ -117,7 +117,8 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     user = value.user;
                                     error = "";
-                                    Navigator.push(
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -147,8 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                             padding: MaterialStateProperty.all(
                                 const EdgeInsets.all(16))),
                         onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
+                          //Navigator.pop(context);
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const RegisterPage()),

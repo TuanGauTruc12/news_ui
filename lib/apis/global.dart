@@ -20,3 +20,5 @@ Color primaryLight = const Color(0xff159A9C);
 ThemeMode themeMode = ThemeMode.system;
 final darkNotifier = ValueNotifier<bool>(false);
 User? user;
+String city = "";
+String temperature = "";

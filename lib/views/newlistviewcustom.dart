@@ -58,7 +58,7 @@ class NewListViewCustom extends StatelessWidget {
                           Text(
                             sumary!,
                             style: const TextStyle(overflow: TextOverflow.fade),
-                            maxLines: 6,
+                            maxLines: 4,
                             textAlign: TextAlign.justify,
                           ),
                           const SizedBox(height: 8),

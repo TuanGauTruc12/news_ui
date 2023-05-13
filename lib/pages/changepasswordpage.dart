@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/views/persontextfield.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -36,6 +37,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               child: Column(
                 children: [
                   PersonTextField(
+                      data: user!.password!,
                       hnitText: 'Mật khẩu hiện tại',
                       iconData: const ImageIcon(
                           AssetImage('images/security.png'),
@@ -43,6 +45,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       isChanged: true,
                       inputType: TextInputType.visiblePassword),
                   PersonTextField(
+                      data: "",
                       hnitText: 'Mật khẩu mới',
                       iconData: const ImageIcon(
                           AssetImage('images/security.png'),
@@ -50,6 +53,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       isChanged: true,
                       inputType: TextInputType.visiblePassword),
                   PersonTextField(
+                    data: "",
                     hnitText: 'Nhập lại mật khẩu mới',
                     iconData: const ImageIcon(AssetImage('images/security.png'),
                         size: 40),

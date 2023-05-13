@@ -171,7 +171,7 @@ class _NewDetailPageState extends State<NewDetailPage> {
                                       const EdgeInsets.all(16)),
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>

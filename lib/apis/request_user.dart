@@ -32,7 +32,7 @@ class RequestUser {
   Future<Message> register(
       String name, String email, String phone, String password) async {
     final response = await http.post(
-      Uri.parse("$url/login"),
+      Uri.parse("$url/register"),
       headers: <String, String>{
         'Content-Type': "application/x-www-form-urlencoded",
       },

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_ui/apis/global.dart';
+import 'package:news_ui/apis/request_user.dart';
 import 'package:news_ui/pages/login.dart';
+import 'package:news_ui/pages/splashscreen.dart';
+import 'package:news_ui/views/alertdialogcustom.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -24,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
     bool isDark = darkNotifier.value;
     Color? color = !isDark ? Colors.grey[200] : Colors.transparent;
     double fontSize = 17;
+    String error = "Lỗi";
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(children: <Widget>[
@@ -64,7 +68,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       title: "Email",
                       type: TextInputType.emailAddress,
                       input: (value) {
-                        email = value;
+                        setState(() {
+                          email = value;
+                        });
                       }),
                   const SizedBox(height: 12),
                   TextFieldCustom(
@@ -105,6 +111,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       const Text('Tôi đồng ý với điều khoản sử dụng')
                     ],
                   ),
+                  error.isEmpty
+                      ? Container()
+                      : Container(
+                          margin: const EdgeInsets.only(left: 10, right: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(error,
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 17,
+                              )),
+                        ),
                   const SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
@@ -116,21 +134,80 @@ class _RegisterPageState extends State<RegisterPage> {
                               const EdgeInsets.all(20)),
                         ),
                         onPressed: () {
-                          final bool emailValidate = 
-    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(email);
+                          final bool emailValidate = RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(email);
                           if (name.isEmpty) {
                             //lỗi name trống
-                          } else if (email.isEmpty) {
-                            //lỗi email trống
-                          } else if(emailValidate){
-                            //
+                            print("name");
+                          } else if (!emailValidate) {
+                            //lỗi email không phù hợp
+                            print("email");
                           } else if (password.length < 8) {
                             //Lỗi password nhỏ hơn 8 ký tự
+                            print("password");
                           } else if (password != repassword) {
                             //lỗi passwor & repassword không trùng nhau
+                            print("repassword");
+                          } else if (!isChecked) {
+                            //Lỗi chưa đồng ý điều khoản
+                            print("điều khoản");
                           } else {
                             //call api
+                            error = "";
+                            RequestUser()
+                                .register(name, email, phoneNumber, password)
+                                .then((message) {
+                              if (message.success! &&
+                                  message.message == "SucessFully") {
+                                print(message);
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => PlaceholderDialog(
+                                    icon: const CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Colors.green,
+                                      child: Icon(
+                                        Icons.check,
+                                        size: 50,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    message: 'Chúc mừng bạn đăng ký thành công',
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          RequestUser()
+                                              .login(email, password)
+                                              .then((models) {
+                                            if (models.success == true) {
+                                              setState(() {
+                                                user = models.user;
+                                              });
+                                              Navigator.pushAndRemoveUntil<
+                                                  dynamic>(
+                                                context,
+                                                MaterialPageRoute<dynamic>(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          const SplashScreen(),
+                                                ),
+                                                (route) => false,
+                                              );
+                                            }
+                                          });
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  error = message.message!;
+                                });
+                              }
+                            });
                           }
                         },
                         child: const Text('Đăng ký')),
