@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/pages/login.dart';
-import 'package:news_ui/views/alertdialogcustom.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
@@ -116,35 +115,24 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: MaterialStateProperty.all(
                               const EdgeInsets.all(20)),
                         ),
-                        onPressed: () => showDialog(
-                              context: context,
-                              builder: (ctx) => PlaceholderDialog(
-                                icon: const CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.green,
-                                  child: Icon(
-                                    Icons.check,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                message: 'Chúc mừng bạn đăng ký thành công',
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pushAndRemoveUntil<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            const LoginPage(),
-                                      ),
-                                      (route) => false,
-                                    ),
-                                    child: const Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            ),
+                        onPressed: () {
+                          final bool emailValidate = 
+    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
+                          if (name.isEmpty) {
+                            //lỗi name trống
+                          } else if (email.isEmpty) {
+                            //lỗi email trống
+                          } else if(emailValidate){
+                            //
+                          } else if (password.length < 8) {
+                            //Lỗi password nhỏ hơn 8 ký tự
+                          } else if (password != repassword) {
+                            //lỗi passwor & repassword không trùng nhau
+                          } else {
+                            //call api
+                          }
+                        },
                         child: const Text('Đăng ký')),
                   ),
                   const SizedBox(height: 16),
@@ -183,3 +171,36 @@ class _RegisterPageState extends State<RegisterPage> {
         ]));
   }
 }
+
+/*
+
+showDialog(
+                              context: context,
+                              builder: (ctx) => PlaceholderDialog(
+                                icon: const CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.green,
+                                  child: Icon(
+                                    Icons.check,
+                                    size: 50,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                message: 'Chúc mừng bạn đăng ký thành công',
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pushAndRemoveUntil<dynamic>(
+                                      context,
+                                      MaterialPageRoute<dynamic>(
+                                        builder: (BuildContext context) =>
+                                            const LoginPage(),
+                                      ),
+                                      (route) => false,
+                                    ),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            ),
+*/
