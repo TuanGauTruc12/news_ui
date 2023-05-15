@@ -22,45 +22,17 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   final textFieldFocusNode = FocusNode();
-  XFile? _imageFile;
-
-  void _setImageFileListFromFile(XFile? value) {
-    _imageFile = value;
-  }
+  File? avatarImageFile;
 
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _onImageButtonPressed(ImageSource source) async {
-    if (context.mounted) {
-      final XFile? pickedFild = await _picker.pickImage(source: source);
-      setState(() {
-        _imageFile = pickedFild;
-      });
-    }
-  }
+    PickedFile? image = await _picker.getImage(source: source);
 
-  Widget _previewImages() {
-    if (_imageFile != null) {
-      return CircleAvatar(
-          child: Image.file(
-        File(_imageFile!.path),
-        errorBuilder:
-            (BuildContext context, Object error, StackTrace? stackTrace) =>
-                const Center(child: Text('This image type is not supported')),
-      ));
-    } else {
-      return Container();
-    }
-  }
-
-  Future<void> retrieveLostData() async {
-    final LostDataResponse response = await _picker.retrieveLostData();
-    if (response.isEmpty) {
-      return;
-    }
-    if (response.file != null) {
+    if (image != null) {
       setState(() {
-        _setImageFileListFromFile(response.file);
+        final File file = File(image.path);
+        avatarImageFile = file;
       });
     }
   }
@@ -147,6 +119,7 @@ class _PersonPageState extends State<PersonPage> {
                                     onTap: () {
                                       _onImageButtonPressed(
                                           ImageSource.gallery);
+                                      Navigator.pop(context);
                                     },
                                     child: Row(
                                       children: const [
@@ -171,7 +144,7 @@ class _PersonPageState extends State<PersonPage> {
                         },
                         child: Stack(
                           children: [
-                            _imageFile == null
+                            avatarImageFile == null
                                 ? CircleAvatar(
                                     radius: 40,
                                     child: image.isEmpty
@@ -182,24 +155,7 @@ class _PersonPageState extends State<PersonPage> {
                                             image: NetworkImage(
                                                 '$URL/$GET_IMAGES/$URL_USER/$image')),
                                   )
-                                : !kIsWeb &&
-                                        defaultTargetPlatform ==
-                                            TargetPlatform.android
-                                    ? FutureBuilder<void>(
-                                        future: retrieveLostData(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<void> snapshot) {
-                                          switch (snapshot.connectionState) {
-                                            case ConnectionState.none:
-                                            case ConnectionState.waiting:
-                                            case ConnectionState.active:
-                                              return Container();
-                                            case ConnectionState.done:
-                                              return _previewImages();
-                                          }
-                                        },
-                                      )
-                                    : _previewImages(),
+                                : Image.file(avatarImageFile!),
                             const Positioned(
                                 bottom: -4,
                                 right: 0,

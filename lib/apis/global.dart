@@ -19,6 +19,14 @@ String URL_weather = "https://api.openweathermap.org/data/2.5/weather?";
 Color primaryLight = const Color(0xff159A9C);
 ThemeMode themeMode = ThemeMode.system;
 final darkNotifier = ValueNotifier<bool>(false);
-User? user;
+User? user = User(
+    id: 2,
+    name: "Phạm Anh Tuấn",
+    email: "test1@gmail.com",
+    password: "tuan1202",
+    idRole: 0,
+    emailAccuracy: "",
+    mobile: "",
+    image: "");
 String city = "";
 String temperature = "";
