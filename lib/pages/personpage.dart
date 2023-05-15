@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/pages/changepasswordpage.dart';
 import 'package:news_ui/pages/login.dart';
 import 'package:news_ui/views/buttomnavigationcustom.dart';
 import 'package:news_ui/views/persontextfield.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PersonPage extends StatefulWidget {
   final onItemTapped;
@@ -18,6 +22,48 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   final textFieldFocusNode = FocusNode();
+  XFile? _imageFile;
+
+  void _setImageFileListFromFile(XFile? value) {
+    _imageFile = value;
+  }
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _onImageButtonPressed(ImageSource source) async {
+    if (context.mounted) {
+      final XFile? pickedFild = await _picker.pickImage(source: source);
+      setState(() {
+        _imageFile = pickedFild;
+      });
+    }
+  }
+
+  Widget _previewImages() {
+    if (_imageFile != null) {
+      return CircleAvatar(
+          child: Image.file(
+        File(_imageFile!.path),
+        errorBuilder:
+            (BuildContext context, Object error, StackTrace? stackTrace) =>
+                const Center(child: Text('This image type is not supported')),
+      ));
+    } else {
+      return Container();
+    }
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostDataResponse response = await _picker.retrieveLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _setImageFileListFromFile(response.file);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +85,7 @@ class _PersonPageState extends State<PersonPage> {
     } else {
       backgroundColor = Colors.transparent;
     }
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -73,15 +120,87 @@ class _PersonPageState extends State<PersonPage> {
                     children: [
                       SizedBox(
                           child: GestureDetector(
-                        onTap: () {},
-                        child: Stack(
-                          children: const [
-                            CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('images/person-logo.png'),
-                              radius: 40,
+                        onTap: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Chọn phương thức ảnh'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      _onImageButtonPressed(ImageSource.camera);
+                                      Navigator.pop(context);
+                                    },
+                                    child: Row(
+                                      children: const [
+                                        Icon(Icons.camera_alt),
+                                        SizedBox(width: 4),
+                                        Text('Chụp ảnh',
+                                            textDirection: TextDirection.ltr)
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 28),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _onImageButtonPressed(
+                                          ImageSource.gallery);
+                                    },
+                                    child: Row(
+                                      children: const [
+                                        Icon(Icons.photo),
+                                        SizedBox(width: 4),
+                                        Text("Chọn ảnh từ máy",
+                                            textDirection: TextDirection.ltr)
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Hủy'),
+                                )
+                              ],
                             ),
-                            Positioned(
+                          );
+                        },
+                        child: Stack(
+                          children: [
+                            _imageFile == null
+                                ? CircleAvatar(
+                                    radius: 40,
+                                    child: image.isEmpty
+                                        ? const Image(
+                                            image: AssetImage(
+                                                'images/person-logo.png'))
+                                        : Image(
+                                            image: NetworkImage(
+                                                '$URL/$GET_IMAGES/$URL_USER/$image')),
+                                  )
+                                : !kIsWeb &&
+                                        defaultTargetPlatform ==
+                                            TargetPlatform.android
+                                    ? FutureBuilder<void>(
+                                        future: retrieveLostData(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<void> snapshot) {
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.none:
+                                            case ConnectionState.waiting:
+                                            case ConnectionState.active:
+                                              return Container();
+                                            case ConnectionState.done:
+                                              return _previewImages();
+                                          }
+                                        },
+                                      )
+                                    : _previewImages(),
+                            const Positioned(
                                 bottom: -4,
                                 right: 0,
                                 child: Icon(Icons.camera_alt_sharp, size: 30))

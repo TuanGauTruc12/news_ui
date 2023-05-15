@@ -40,6 +40,7 @@ dependencies:
   flutter_html: ^2.2.1
   flutter_easyloading: ^3.0.5
   intl: ^0.18.1
+  image_picker: ^0.8.7+5
 
 dev_dependencies:
   flutter_test:
