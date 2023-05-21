@@ -6,7 +6,7 @@ enum Brightness { light, dark }
 double fontSize = 18;
 
 Brightness? brightness = Brightness.light;
-const String URL = "http://172.16.1.26:8081/";
+const String URL = "http://172.16.1.20:8081/";
 const String GET_NEWS = "news";
 const String GET_CATEGORY = "categories";
 const String GET_PROPERTY = "properties";
@@ -19,14 +19,6 @@ String URL_weather = "https://api.openweathermap.org/data/2.5/weather?";
 Color primaryLight = const Color(0xff159A9C);
 ThemeMode themeMode = ThemeMode.system;
 final darkNotifier = ValueNotifier<bool>(false);
-User? user = User(
-    id: 2,
-    name: "Phạm Anh Tuấn",
-    email: "test1@gmail.com",
-    password: "tuan1202",
-    idRole: 0,
-    emailAccuracy: "",
-    mobile: "",
-    image: "");
+User? user;
 String city = "";
 String temperature = "";

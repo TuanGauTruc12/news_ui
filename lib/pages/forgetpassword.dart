@@ -10,6 +10,7 @@ class ForgetPasswordPage extends StatefulWidget {
 
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   String email = "";
+  bool isClear = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,8 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               Padding(
                 padding: const EdgeInsets.all(24),
                 child: TextFieldCustom(
-                  isRequired: false,
+                    isClear: isClear,
+                    isRequired: false,
                     title: "Nhập email",
                     type: TextInputType.emailAddress,
                     input: (value) {
@@ -54,7 +56,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                             horizontal: 30, vertical: 16)),
                   ),
                   onPressed: () {
-                    
+                    isClear = true;
                   },
                   child: const Text('Xác nhận'))
             ],

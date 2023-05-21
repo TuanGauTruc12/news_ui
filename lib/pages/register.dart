@@ -55,6 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 18),
                   TextFieldCustom(
+                    isClear: false,
                     isRequired: true,
                     title: "Họ và tên",
                     type: TextInputType.text,
@@ -64,6 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 12),
                   TextFieldCustom(
+                      isClear: false,
                       isRequired: true,
                       title: "Email",
                       type: TextInputType.emailAddress,
@@ -74,6 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                   const SizedBox(height: 12),
                   TextFieldCustom(
+                      isClear: false,
                       isRequired: false,
                       title: "Số điện thoại",
                       type: TextInputType.number,
@@ -183,6 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             if (models.success == true) {
                                               setState(() {
                                                 user = models.user;
+                                                isChecked = true;
                                               });
                                               Navigator.pushAndRemoveUntil<
                                                   dynamic>(

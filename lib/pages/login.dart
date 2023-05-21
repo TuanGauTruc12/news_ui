@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   String error = "";
   double fontSize = 18;
   bool isDark = darkNotifier.value;
+  bool isClear = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 32),
                   TextFieldCustom(
+                      isClear: isClear,
                       isRequired: false,
                       title: 'Nhập email',
                       type: TextInputType.emailAddress,
@@ -59,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                       }),
                   const SizedBox(height: 32),
                   PasswordFieldCustom(
-                      isRequired: false,
+                      isRequired: isClear,
                       title: 'Nhập mật khẩu',
                       input: (value) {
                         password = value;
@@ -117,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     user = value.user;
                                     error = "";
+                                    isClear = true;
                                     Navigator.pop(context);
                                     Navigator.pushReplacement(
                                         context,

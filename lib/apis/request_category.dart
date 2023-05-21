@@ -8,7 +8,6 @@ import 'package:news_ui/apis/global.dart';
 
 class RequestCategory {
   static String url = "$URL$GET_CATEGORY/";
-
   
   static List<category.Category> parseCategory(String reponseBody) {
     CategoryModels categoryModels =

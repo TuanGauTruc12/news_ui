@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:news_ui/apis/global.dart';
+import 'package:news_ui/apis/request_comment.dart';
 import 'package:news_ui/apis/request_new.dart';
 import 'package:news_ui/models/object/comment.dart';
 import 'package:news_ui/models/object/new.dart';
@@ -56,8 +57,8 @@ class _NewDetailPageState extends State<NewDetailPage> {
       }
     }
 
+    bool isClear = false;
     bool isDark = darkNotifier.value;
-    double size = user != null ? MediaQuery.of(context).size.width * 0.1 : 0;
     return Scaffold(
         endDrawer: DrawerNewDetail(setFontSize: setFontSize),
         appBar: AppbarNewDetail(isDark: isDark),
@@ -137,8 +138,8 @@ class _NewDetailPageState extends State<NewDetailPage> {
                   ),
                   Positioned(
                       bottom: 0,
-                      left: size,
-                      right: size,
+                      left: 0,
+                      right: 0,
                       child: Container(
                         alignment: Alignment.center,
                         child: user != null
@@ -152,16 +153,55 @@ class _NewDetailPageState extends State<NewDetailPage> {
                                       input: (value) {
                                         contentComment = value;
                                       },
+                                      isClear: isClear,
                                     )),
                                 Expanded(
                                     flex: 2,
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: const Icon(
-                                        Icons.send,
-                                        color: Colors.blue,
-                                      ),
-                                    ))
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor: isDark
+                                                ? MaterialStateProperty.all(
+                                                    Colors.transparent)
+                                                : MaterialStateProperty.all(
+                                                    const Color(0xff159A9C)),
+                                            padding: MaterialStateProperty.all(
+                                                const EdgeInsets.all(16)),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ))),
+                                        onPressed: () {
+                                          if (contentComment.isNotEmpty) {
+                                            DateTime now = DateTime.now();
+                                            String dateTime =
+                                                '${now.year}-${now.month}-${now.day}';
+                                            RequestComment.sendComment(
+                                                    contentComment,
+                                                    dateTime,
+                                                    newDetail!.id!,
+                                                    user!.id!)
+                                                .then((comment) => {
+                                                      if (comment.success!)
+                                                        {
+                                                          RequestComment
+                                                                  .fetchComment(
+                                                                      newDetail!
+                                                                          .slug!)
+                                                              .then(
+                                                                  (commentsFetch) {
+                                                            setState(() {
+                                                              comments =
+                                                                  commentsFetch;
+                                                              isClear = true;
+                                                            });
+                                                          })
+                                                        }
+                                                    });
+                                          }
+                                        },
+                                        child: const Icon(Icons.send,
+                                            color: Colors.white)))
                               ])
                             : ElevatedButton(
                                 style: ButtonStyle(
