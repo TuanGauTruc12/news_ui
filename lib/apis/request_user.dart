@@ -19,14 +19,19 @@ class RequestUser {
     );
 
     if (response.statusCode == 200) {
-      return compute(parseLogin, utf8.decode(response.bodyBytes));
+      return compute(_parseLogin, utf8.decode(response.bodyBytes));
     }
     throw Exception("Error Server");
   }
 
-  static UserModels parseLogin(String reponseBody) {
+  static UserModels _parseLogin(String reponseBody) {
     UserModels userModels = UserModels.fromJson(jsonDecode(reponseBody));
     return userModels;
+  }
+
+  static Message _parseRegister(String reponseBody) {
+    Message message = Message.fromJson(jsonDecode(reponseBody));
+    return message;
   }
 
   Future<Message> register(
@@ -45,13 +50,31 @@ class RequestUser {
     );
 
     if (response.statusCode == 200) {
-      return compute(parseRegister, utf8.decode(response.bodyBytes));
+      return compute(_parseRegister, utf8.decode(response.bodyBytes));
     } else {
       throw Exception("Error Server");
     }
   }
 
-  static Message parseRegister(String reponseBody) {
+  static Future<Message> forgetPassword(String email) async {
+    final response = await http.post(
+      Uri.parse("$url/forget-password"),
+      headers: <String, String>{
+        'Content-Type': "application/x-www-form-urlencoded",
+      },
+      body: {
+        'email': email,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return compute(_parseForget, utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception("Error Server");
+    }
+  }
+
+  static Message _parseForget(String reponseBody) {
     Message message = Message.fromJson(jsonDecode(reponseBody));
     return message;
   }

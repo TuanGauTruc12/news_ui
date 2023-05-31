@@ -6,7 +6,7 @@ enum Brightness { light, dark }
 double fontSize = 18;
 
 Brightness? brightness = Brightness.light;
-const String URL = "http://172.16.1.20:8081/";
+const String URL = "http://192.168.0.135:8081/";
 const String GET_NEWS = "news";
 const String GET_CATEGORY = "categories";
 const String GET_PROPERTY = "properties";

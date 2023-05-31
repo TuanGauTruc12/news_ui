@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ui/apis/request_user.dart';
 import 'package:news_ui/views/textfieldcustom.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
@@ -9,8 +10,19 @@ class ForgetPasswordPage extends StatefulWidget {
 }
 
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
-  String email = "";
-  bool isClear = false;
+  late String email;
+  late bool isClear;
+  late String error;
+  late Color colorTextMessage;
+
+  @override
+  void initState() {
+    isClear = false;
+    email = "";
+    error = "";
+    colorTextMessage = Colors.red;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +59,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       email = value;
                     }),
               ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
+                padding: const EdgeInsets.only(top: 8, bottom: 8),
+                child: Text(error,
+                    style: TextStyle(fontSize: 18, color: colorTextMessage)),
+              ),
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -56,9 +75,33 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                             horizontal: 30, vertical: 16)),
                   ),
                   onPressed: () {
-                    isClear = true;
+                    final bool emailValidate = RegExp(
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(email);
+
+                    if (!emailValidate) {
+                      setState(() {
+                        colorTextMessage = Colors.red;
+                        error = "Bạn nhập email chưa chính xác!!!";
+                      });
+                      return;
+                    }
+
+                    RequestUser.forgetPassword(email).then((message) {
+                      if (!(message.success!)) {
+                        setState(() {
+                          error = message.message!;
+                        });
+                      } else {
+                        setState(() {
+                          colorTextMessage = Colors.green;
+                          error = message.message!;
+                          isClear = true;
+                        });
+                      }
+                    });
                   },
-                  child: const Text('Xác nhận'))
+                  child: const Text('Xác nhận')),
             ],
           ))
     ]));

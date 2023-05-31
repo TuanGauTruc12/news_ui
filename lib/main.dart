@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_ui/apis/global.dart';
-import 'package:news_ui/pages/splashscreen.dart';
+import 'package:news_ui/pages/forgetpasswordpage.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
             )),
             darkTheme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
-            home: const SplashScreen(),
+            home: const ForgetPasswordPage(),
           );
         });
   }

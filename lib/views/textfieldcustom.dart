@@ -23,6 +23,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
+    print(widget.isClear);
     if (widget.isClear == true) {
       setState(() {
         controller.clear();

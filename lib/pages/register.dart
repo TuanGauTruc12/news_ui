@@ -15,19 +15,34 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool isChecked = false;
-  String name = "";
-  String email = "";
-  String phoneNumber = "";
-  String password = "";
-  String repassword = "";
+  late bool isChecked;
+  late String name;
+  late String email;
+  late String phoneNumber;
+  late String password;
+  late String repassword;
+  late String error;
+  late bool isClear;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    isChecked = false;
+    error = "";
+    name = "";
+    phoneNumber = "";
+    email = "";
+    password = "";
+    repassword = "";
+    isClear = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isDark = darkNotifier.value;
     Color? color = !isDark ? Colors.grey[200] : Colors.transparent;
     double fontSize = 17;
-    String error = "Lỗi";
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(children: <Widget>[
@@ -55,8 +70,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 18),
                   TextFieldCustom(
-                    isClear: false,
-                    isRequired: true,
+                    isClear: isClear,
+                    isRequired: false,
                     title: "Họ và tên",
                     type: TextInputType.text,
                     input: (value) {
@@ -65,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 12),
                   TextFieldCustom(
-                      isClear: false,
+                      isClear: isClear,
                       isRequired: true,
                       title: "Email",
                       type: TextInputType.emailAddress,
@@ -76,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                   const SizedBox(height: 12),
                   TextFieldCustom(
-                      isClear: false,
+                      isClear: isClear,
                       isRequired: false,
                       title: "Số điện thoại",
                       type: TextInputType.number,
@@ -142,19 +157,37 @@ class _RegisterPageState extends State<RegisterPage> {
                               .hasMatch(email);
                           if (name.isEmpty) {
                             //lỗi name trống
+                            setState(() {
+                              error = "Tên không được bỏ trống!";
+                              isChecked = true;
+                            });
                             print("name");
                           } else if (!emailValidate) {
                             //lỗi email không phù hợp
+                            setState(() {
+                              error = "Email không phù hợp";
+                              isChecked = true;
+                            });
                             print("email");
                           } else if (password.length < 8) {
                             //Lỗi password nhỏ hơn 8 ký tự
-                            print("password");
+                            setState(() {
+                              error = "Mật khẩu phải từ 8 ký tự trở lên";
+                              isChecked = true;
+                            });
                           } else if (password != repassword) {
+                            setState(() {
+                              error = "Mật khẩu nhập lại không khớp!";
+                              isChecked = true;
+                            });
                             //lỗi passwor & repassword không trùng nhau
                             print("repassword");
                           } else if (!isChecked) {
                             //Lỗi chưa đồng ý điều khoản
-                            print("điều khoản");
+                            setState(() {
+                              error = "Bạn chưa đồng ý các điều khoản!";
+                              isChecked = true;
+                            });
                           } else {
                             //call api
                             error = "";
@@ -163,7 +196,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 .then((message) {
                               if (message.success! &&
                                   message.message == "SucessFully") {
-                                print(message);
                                 showDialog(
                                   context: context,
                                   builder: (ctx) => PlaceholderDialog(
