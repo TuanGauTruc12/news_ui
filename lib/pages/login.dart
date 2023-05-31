@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_ui/apis/global.dart';
 import 'package:news_ui/apis/request_user.dart';
-import 'package:news_ui/pages/ForgetPassword.dart';
+import 'package:news_ui/pages/forgetpasswordpage.dart';
 import 'package:news_ui/pages/register.dart';
 import 'package:news_ui/pages/splashscreen.dart';
 import 'package:news_ui/views/passwordfieldcustom.dart';
